@@ -4,6 +4,29 @@ All notable changes to this skill are documented here. Format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), versioning follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2026-09-22
+
+Documentation and consistency fixes. No behaviour change in the judgment engine: a verdict computed
+on 1.0.0 is identical on 1.0.1, same state hash included.
+
+### Fixed
+
+- The `git clone` command and the links to the base skill pointed at a `<your-user>` placeholder in
+  both READMEs, so anyone copying the install command got an error. They now point at the real
+  repository.
+- The Install section listed destination paths without saying how to obtain the folder. It is now
+  two numbered steps, plus a warning that the folder must be named exactly `ysat-jev`: a mismatch
+  makes the skill fail to load silently, with no error message.
+- Invariant 8 read "Read only. It never sends, posts, edits or runs anything outside `working/`"
+  while the `typesafe` backend posts the state to a hosted API. The invariant now declares that
+  exception explicitly: opt in, off by default, redacted, never an operational dependency. Corrected
+  in `SKILL.md` and in both READMEs.
+
+### Added
+
+- Cross link from the base `ysat` README back to this variant, so navigation closes in both
+  directions.
+
 ## [1.0.0] - 2026-09-22
 
 Initial release of `ysat-jev`, the typed judgment variant of the `ysat` counterpoint skill. Same
