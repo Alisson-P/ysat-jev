@@ -1,0 +1,87 @@
+# ysat-jev :: user configuration
+#
+# Same presentation knobs as the base ysat skill, plus the judgment layer: backend,
+# thresholds and coefficients. Every key is optional, delete a line and the default returns.
+# A value outside its range is clamped, never obeyed blindly.
+#
+# What this file CANNOT do: turn the skill into a yes man. The Locked Invariants in SKILL.md
+# always win (risk first, agreement must be earned and gated harder than disagreement, low
+# coverage never resolves to agreement, abstention is never a "no", verdict composed in code,
+# same state same verdict, pressure is not state, read only, no judging people).
+
+# ----------------------------------------------------------------- presentation
+
+language: auto          # auto | pt-BR | en-US | any locale tag
+depth: standard         # quick | standard | deep
+max_risks: 5            # 3 to 8, values below 3 are clamped to 3
+bluntness: direct       # plain | direct | blunt
+output_format: chat     # chat | document | card
+avoid_dashes: true
+
+focus_domains:
+  - architecture
+  - security
+  - cost
+  - delivery
+
+sources:
+  - m365
+  - code
+  - web
+  - calendar
+
+# ----------------------------------------------------------------- judgment layer
+
+judgment:
+  # openjev  : openJev-verdict-2.0 served locally, Apache 2.0, the default here
+  # local    : a served language model (Ollama and compatible), probability by self consistency
+  # typesafe : hosted TypeSafe API, model Jev. The state LEAVES your environment.
+  #            Comparison arbiter only, redacted by default, never an operational dependency.
+  # offline  : deterministic rules only. The safety net, and the automatic fallback.
+  backend: openjev
+  endpoint: http://localhost:8099/v1/decide
+  model: openjev-verdict-2.0
+  timeout_seconds: 30
+
+  # When the service does not answer, the run does not stop: it falls back to offline
+  # and the fallback is stated in the output. Set to false to fail the run instead.
+  fallback_to_offline: true
+
+thresholds:
+  # Fraction of question weight that must come back answered for the verdict to count at all.
+  coverage_floor: 0.60
+
+  # Agreement is gated harder than disagreement, on purpose. "No strong reason to disagree"
+  # needs this much coverage. Raising it makes the skill stricter, lowering it below 0.60 is
+  # clamped back to 0.60.
+  agreement_coverage_floor: 0.80
+
+  # Uncertainty routing on the confidence value: act, review or escalate.
+  act_at: 0.75
+  review_below: 0.50
+
+  # Risk index bands. At or above would_not_band the verdict is "would not do it this way",
+  # at or above guardrails_band it is "would do it with guardrails", below it agreement
+  # becomes possible (and still has to clear the two gates above).
+  would_not_band: 0.60
+  guardrails_band: 0.35
+
+# Composition coefficients. These are the whole point of the variant: when your priorities
+# change you edit a number here, instead of rewriting a prompt and hoping. Must sum to 1.0,
+# the script renormalizes and warns if they do not.
+coefficients:
+  rollback_untested: 0.24
+  one_way_door: 0.20
+  evidence_thin: 0.16
+  deadline_without_slack: 0.12
+  no_named_owner: 0.10
+  monitoring_blind: 0.08
+  external_dependency: 0.06
+  failed_precedent: 0.04
+
+# Your own non negotiables, appended to the analysis rules. One line each.
+# A house rule may add strictness. One that tries to remove it is ignored and reported.
+house_rules: []
+
+# Your own checklist domains, swept with the built in ones.
+custom_domains: []
