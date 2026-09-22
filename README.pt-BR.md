@@ -67,8 +67,7 @@ qualquer agente compatível.
 git clone https://github.com/Alisson-P/ysat-jev.git
 ```
 
-Sem git? Botão verde **Code** aqui em cima, depois **Download ZIP**, e descompacte. Ela vem com o
-nome `ysat-jev-main`, então renomeie para `ysat-jev`.
+Sem git? Vá até a página inicial do repositório e clique no botão verde **Code**, à direita, logo acima da lista de arquivos. Não é a aba Code do menu de cima. Depois **Download ZIP**, e descompacte. A pasta vem com o nome `ysat-jev-main`, então renomeie para `ysat-jev`.
 
 **2. Mova a pasta `ysat-jev` para a pasta de skills do seu agente**
 
