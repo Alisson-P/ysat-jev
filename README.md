@@ -4,9 +4,9 @@
 
 **A counterpoint whose verdict is computed, not written.**
 
-> 🇧🇷 Leia em [português](README.pt-BR.md) · Base skill: [YSAT](https://github.com/<your-user>/ysat)
+> 🇧🇷 Leia em [português](README.pt-BR.md) · Base skill: [YSAT](https://github.com/Alisson-P/ysat)
 
-This is the typed decision variant of [YSAT](https://github.com/<your-user>/ysat). The purpose is
+This is the typed decision variant of [YSAT](https://github.com/Alisson-P/ysat). The purpose is
 identical: disagree with a decision, with evidence, before the decision is made. One layer differs.
 
 In YSAT, the model reads your context and **writes** the verdict. Here, the model never writes a
@@ -60,17 +60,24 @@ instruction. A run that judged too little lands on `inconclusive`, never on reas
 Follows the [Agent Skills specification](https://agentskills.io/specification), so it works in any
 compatible agent.
 
-**Microsoft 365 Copilot (Cowork personal skills)**
-
-```
-Documents/Cowork/skills/ysat-jev/
-```
-
-**Any other Agent Skills compatible runtime**
+**1. Get the folder**
 
 ```bash
-git clone https://github.com/<your-user>/ysat-jev.git ~/.agent/skills/ysat-jev
+git clone https://github.com/Alisson-P/ysat-jev.git
 ```
+
+No git? Use the green **Code** button at the top of this page, then **Download ZIP**, and unzip it.
+It comes out named `ysat-jev-main`, so rename it to `ysat-jev`.
+
+**2. Move the `ysat-jev` folder into your agent's skills folder**
+
+| Agent | Where it goes |
+|---|---|
+| Microsoft 365 Copilot (Cowork) | `Documents/Cowork/skills/ysat-jev/` |
+| Any other Agent Skills runtime | usually `~/.agent/skills/ysat-jev/` |
+
+> The folder has to be named exactly `ysat-jev`, the same as `name` in the frontmatter. If it does
+> not match, the skill never loads and no error is shown.
 
 Installing both this and the base YSAT is fine and is the intended setup: YSAT answers the
 conversational ask, this one answers when you say "typed verdict" or "audit trail". Each skill's
@@ -167,7 +174,9 @@ control, because a verdict you can retune mid-argument is a verdict that can be 
 5. The verdict is composed in code, never narrated.
 6. Same state, same verdict. The hash is recorded.
 7. Pressure is not state.
-8. Read only. It never sends, posts, edits or runs anything outside `working/`.
+8. Read only, with one declared exception. It never sends, posts, edits or runs anything outside
+   `working/`. The exception is the `typesafe` backend, which posts the state to a hosted API: opt
+   in, off by default, redacted, never a dependency.
 9. No evaluation of people.
 10. You decide. It offers to help execute even when you go ahead against it.
 

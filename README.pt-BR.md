@@ -4,9 +4,9 @@
 
 **Um contraponto cujo veredito é calculado, não escrito.**
 
-> 🇺🇸 Read this in [English](README.md) · Skill base: [YSAT](https://github.com/<seu-usuario>/ysat)
+> 🇺🇸 Read this in [English](README.md) · Skill base: [YSAT](https://github.com/Alisson-P/ysat)
 
-Meus caros, esta é a variante com decisões tipadas da [YSAT](https://github.com/<seu-usuario>/ysat).
+Meus caros, esta é a variante com decisões tipadas da [YSAT](https://github.com/Alisson-P/ysat).
 A finalidade é idêntica: discordar de uma decisão, com evidência, antes dela ser tomada. Muda uma
 camada só.
 
@@ -61,17 +61,24 @@ como instrução. Uma rodada que julgou pouco cai em `inconclusive`, nunca em tr
 Segue a [especificação Agent Skills](https://agentskills.io/specification), então funciona em
 qualquer agente compatível.
 
-**Microsoft 365 Copilot (skills pessoais do Cowork)**
-
-```
-Documents/Cowork/skills/ysat-jev/
-```
-
-**Qualquer outro runtime compatível**
+**1. Baixe a pasta**
 
 ```bash
-git clone https://github.com/<seu-usuario>/ysat-jev.git ~/.agent/skills/ysat-jev
+git clone https://github.com/Alisson-P/ysat-jev.git
 ```
+
+Sem git? Botão verde **Code** aqui em cima, depois **Download ZIP**, e descompacte. Ela vem com o
+nome `ysat-jev-main`, então renomeie para `ysat-jev`.
+
+**2. Mova a pasta `ysat-jev` para a pasta de skills do seu agente**
+
+| Agente | Destino |
+|---|---|
+| Microsoft 365 Copilot (Cowork) | `Documents/Cowork/skills/ysat-jev/` |
+| Outros runtimes Agent Skills | normalmente `~/.agent/skills/ysat-jev/` |
+
+> A pasta tem que se chamar exatamente `ysat-jev`, igual ao `name` do frontmatter.
+> Se não bater, a skill não carrega e nenhum erro aparece.
 
 Instalar esta e a YSAT base junto é o cenário previsto: a YSAT atende o pedido conversacional, esta
 atende quando você diz "veredito tipado" ou "trilha de auditoria". A descrição de cada uma delega
@@ -170,7 +177,9 @@ na discussão.
 5. O veredito é composto em código, nunca narrado.
 6. Mesmo estado, mesmo veredito. O hash fica registrado.
 7. Pressão não é estado.
-8. Somente leitura. Nunca envia, posta, edita nem executa nada fora de `working/`.
+8. Somente leitura, com uma exceção declarada. Nunca envia, posta, edita nem executa nada fora de
+   `working/`. A exceção é o backend `typesafe`, que envia o estado para uma API hospedada: opt in,
+   desligado por padrão, redigido, nunca uma dependência.
 9. Nada de avaliar pessoas.
 10. Quem decide é você. Ela se oferece para ajudar a executar inclusive contra ela mesma.
 
